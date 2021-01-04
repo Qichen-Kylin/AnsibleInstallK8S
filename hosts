@@ -1,0 +1,32 @@
+# hosts文件用来定义 Ansible 批量操作的主机列表，主机列表有多种书写方式,中括号中的名字代表组名，可以根据需求将庞大的主机分成具有标识的组。
+# 主机部分可以使用域名、主机名、IP 地址表示；当然使用前两者时，需要主机能反解析到相应的 IP 地址，一般此类配置中多使用 IP 地址；未分组的机器需保留在 hosts 的顶部。
+[all]
+10.18.100.116 hostname=utility ansible_ssh_user=root ansible_ssh_pass='Dsj_2020_WW#ct'
+10.18.100.173 hostname=master  ansible_ssh_user=root ansible_ssh_pass='Dsj_2020_WW#ct'
+10.18.100.174 hostname=worker1 ansible_ssh_user=root ansible_ssh_pass='Dsj_2020_WW#ct'
+10.18.100.175 hostname=worker2 ansible_ssh_user=root ansible_ssh_pass='Dsj_2020_WW#ct'
+10.18.100.176 hostname=worker3 ansible_ssh_user=root ansible_ssh_pass='Dsj_2020_WW#ct'
+
+[k8smaster]
+10.18.100.116 master_name=k8smaster1 ansible_ssh_user=root ansible_ssh_pass='Dsj_2020_WW#ct'
+10.18.100.173 master_name=k8smaster2 ansible_ssh_user=root ansible_ssh_pass='Dsj_2020_WW#ct'
+
+[k8sworker]
+10.18.100.174 worker_name=k8sworker1 ansible_ssh_user=root ansible_ssh_pass='Dsj_2020_WW#ct'
+10.18.100.175 worker_name=k8sworker2 ansible_ssh_user=root ansible_ssh_pass='Dsj_2020_WW#ct'
+10.18.100.176 worker_name=k8sworker3 ansible_ssh_user=root ansible_ssh_pass='Dsj_2020_WW#ct'
+
+[k8setcd]
+10.18.100.116 etcd_name=k8setcd1 ansible_ssh_user=root ansible_ssh_pass='Dsj_2020_WW#ct'
+10.18.100.173 etcd_name=k8setcd2 ansible_ssh_user=root ansible_ssh_pass='Dsj_2020_WW#ct'
+
+[k8sloadbalancer]
+10.18.100.116 lb_name=k8slb-master ansible_ssh_user=root ansible_ssh_pass='Dsj_2020_WW#ct'
+10.18.100.173 lb_name=k8slb-backup ansible_ssh_user=root ansible_ssh_pass='Dsj_2020_WW#ct'
+
+[k8s:children]
+k8smaster
+k8sworker
+
+[k8snewworker]
+worker[4:6] ansible_ssh_user=root ansible_ssh_pass='Dsj_2020_WW#ct'
